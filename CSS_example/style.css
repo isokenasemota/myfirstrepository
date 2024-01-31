@@ -1,0 +1,16 @@
+#centred-text {
+   font-size: large; 
+   color: coral;
+   font-weight: bold;
+}
+.styledFont {
+   color: blue;
+   font-size: medium;
+   font-weight: bold;
+   font-family: 'Times New Roman', Times, serif;
+}
+#styledImage {
+    border: width 2px;
+    border-color: aqua;
+    border-style: dotted;
+}
