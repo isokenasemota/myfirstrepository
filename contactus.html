@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us Form</title>
+
+<style>
+        body {
+        background-color: gray;
+        }
+        h1 {
+        color:#eee;
+        font: size 28px;
+        text-align: center;
+        background-color: #333333;
+        margin: auto;
+        padding: auto;
+        }
+        form {
+        font-size: 15px;
+        font-family: cursive;
+        }
+</style>
+
+</head>
+<body>
+<h1>Contact Us Form</h1>
+
+   <form action="https://api.web3forms.com/submit" method="POST">
+       <input type="hidden" name="apikey" value="2ce430e4-27b3-434b-890d-d3e9a59d481a">
+       <input type="hidden" name="subject" value="New Submission from Web3Forms">
+       <input type="checkbox" name="botcheck" id="" style="display: none;">
+       <input type="hidden" name="from_name" value="Notifications">
+
+       <label for="name">Name:</label>
+       <input type="text" id="name" name="name"><br><br>
+
+       <label for="email">Email:</label>
+       <input type="email" id="email" name="email"><br><br>
+
+       <label for="message">Message:</label>
+       <textarea id="message" name="message"></textarea><br><br>
+
+       <input type="submit" value="Send">
+       
+       <div id="result"></div>
+
+   </form> 
+
+   <script>
+       const form = document.getElementById('form');
+const result = document.getElementById('result');
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const formData = new FormData(form);
+  const object = Object.fromEntries(formData);
+  const json = JSON.stringify(object);
+  result.innerHTML = "Please wait..."
+
+    fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: json
+        })
+        .then(async (response) => {
+            let json = await response.json();
+            if (response.status == 200) {
+                result.innerHTML = json.message;
+            } else {
+                console.log(response);
+                result.innerHTML = json.message;
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            result.innerHTML = "Something went wrong!";
+        })
+        .then(function() {
+            form.reset();
+            setTimeout(() => {
+                result.style.display = "none";
+            }, 3000);
+        });
+});
+   </script>
+
+</body>
+</html>
